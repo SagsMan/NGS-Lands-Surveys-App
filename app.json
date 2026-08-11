@@ -1,42 +1,38 @@
 {
   "expo": {
-    "name": "NGS Lands Surveys",
-    "slug": "ngs-lands-surveys-app",
-    "version": "0.1.0",
+    "name": "NGS Land Services Mobile",
+    "slug": "ngs-land-services-mobile",
+    "version": "1.0.0",
     "orientation": "portrait",
-    "scheme": "ngs-land-surveys",
-    "userInterfaceStyle": "automatic",
-    "assetBundlePatterns": ["**/*"],
     "icon": "./assets/images/icon.png",
+    "scheme": "ngs-land-services-mobile",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/images/icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#f7faf7"
+    },
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.sagsman.ngslandssurveys"
+      "supportsTablet": false
     },
-    "android": {
-      "package": "com.sagsman.ngslandssurveys",
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/icon.png",
-        "backgroundColor": "#F4F7FB"
-      }
-    },
+    "android": {},
     "web": {
-      "bundler": "metro",
       "favicon": "./assets/images/icon.png"
     },
     "plugins": [
-      "expo-router",
-      "expo-font",
       [
-        "expo-splash-screen",
+        "expo-router",
         {
-          "image": "./assets/images/icon.png",
-          "resizeMode": "contain",
-          "backgroundColor": "#F4F7FB"
+          "origin": "https://replit.com/"
         }
-      ]
+      ],
+      "expo-font",
+      "expo-web-browser"
     ],
     "experiments": {
-      "typedRoutes": true
+      "typedRoutes": true,
+      "reactCompiler": true
     }
   }
 }
