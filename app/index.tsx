@@ -15,7 +15,10 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useColors } from '@/hooks/useColors';
 
 const landscape = require('@/assets/images/brand/landscape.jpg');
+const ministryLogo = require('@/assets/images/brand/ministry-logo.png');
 const ministrySeal = require('@/assets/images/brand/ministry-seal.png');
+const getStartedArtwork = require('@/assets/images/brand/get-started.png');
+const signInArtwork = require('@/assets/images/brand/sign-in.png');
 
 type OnboardingStep = 'splash' | 'welcome';
 
@@ -52,7 +55,7 @@ export default function OnboardingScreen() {
         <View style={[StyleSheet.absoluteFill, { backgroundColor: colors.imageWashStrong }]} />
         <View style={[styles.splashContent, { paddingTop: insets.top, paddingBottom: insets.bottom }]}>
           <Image
-            source={ministrySeal}
+            source={ministryLogo}
             resizeMode="contain"
             style={styles.splashLogo}
             accessibilityLabel="Ministry of Lands and Survey, Niger State"
@@ -109,7 +112,12 @@ export default function OnboardingScreen() {
               },
             ]}
           >
-            <Text style={[styles.primaryButtonText, { color: colors.primaryForeground }]}>Get Started</Text>
+            <Image
+              source={getStartedArtwork}
+              resizeMode="contain"
+              style={styles.primaryButtonArtwork}
+              accessibilityLabel="Get Started"
+            />
           </Pressable>
           <Pressable
             testID="sign-in-button"
@@ -118,7 +126,12 @@ export default function OnboardingScreen() {
             onPress={tapSignIn}
             style={({ pressed }) => [styles.signInButton, { opacity: pressed ? 0.55 : 1 }]}
           >
-            <Text style={[styles.signInText, { color: colors.mutedForeground }]}>Sign in</Text>
+            <Image
+              source={signInArtwork}
+              resizeMode="contain"
+              style={styles.signInArtwork}
+              accessibilityLabel="Sign in"
+            />
           </Pressable>
         </View>
       </View>
@@ -197,20 +210,16 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   primaryButton: {
-    width: '100%',
-    minHeight: 54,
-    borderRadius: 28,
+    width: '106.75%',
+    minHeight: 60,
+    borderRadius: 30,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowOpacity: 1,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 5 },
-    elevation: 5,
+    overflow: 'visible',
   },
-  primaryButtonText: {
-    fontFamily: 'Inter_600SemiBold',
-    fontSize: 16,
-    lineHeight: 22,
+  primaryButtonArtwork: {
+    width: '100%',
+    height: '100%',
   },
   signInButton: {
     minHeight: 48,
@@ -218,10 +227,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  signInText: {
-    fontFamily: 'Inter_400Regular',
-    fontSize: 16,
-    lineHeight: 22,
+  signInArtwork: {
+    width: 41,
+    height: 14,
   },
   homeIndicator: {
     position: 'absolute',

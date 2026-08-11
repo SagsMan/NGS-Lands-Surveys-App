@@ -1,5 +1,11 @@
 minimumReleaseAge: 1440
 
+catalog:
+  '@tanstack/react-query': ^5.66.11
+  react: 19.1.0
+  react-dom: 19.1.0
+  zod: ^3.25.76
+
 minimumReleaseAgeExclude:
   - '@expo/*'
   - '@react-native/*'
