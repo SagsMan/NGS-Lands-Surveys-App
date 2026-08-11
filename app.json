@@ -1,0 +1,42 @@
+{
+  "expo": {
+    "name": "NGS Lands Surveys",
+    "slug": "ngs-lands-surveys-app",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "scheme": "ngs-land-surveys",
+    "userInterfaceStyle": "automatic",
+    "assetBundlePatterns": ["**/*"],
+    "icon": "./assets/images/icon.png",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.sagsman.ngslandssurveys"
+    },
+    "android": {
+      "package": "com.sagsman.ngslandssurveys",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/icon.png",
+        "backgroundColor": "#F4F7FB"
+      }
+    },
+    "web": {
+      "bundler": "metro",
+      "favicon": "./assets/images/icon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/icon.png",
+          "resizeMode": "contain",
+          "backgroundColor": "#F4F7FB"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
