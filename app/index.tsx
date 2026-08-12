@@ -28,7 +28,7 @@ export default function OnboardingScreen() {
   const [step, setStep] = useState<OnboardingStep>('splash');
 
   useEffect(() => {
-    const timer = setTimeout(() => setStep('welcome'), 1550);
+    const timer = setTimeout(() => setStep('welcome'), 30000);
     return () => clearTimeout(timer);
   }, []);
 
