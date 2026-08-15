@@ -116,7 +116,7 @@ export default function CitizenApplications() {
 
           <DetailSection title="Payment Information">
             {[
-              ['Amount Paid', '$500'],
+              ['Amount Paid', '₦500'],
               ['Transaction ID', '1234-5678-9012'],
               ['Payment Date', '12 Aug 2026, 00:34'],
             ].map(([k, v]) => <DetailRow key={k} label={k} value={v} />)}

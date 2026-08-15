@@ -12,7 +12,7 @@ const PRIMARY = '#13bf43';
 
 const MESSAGES = [
   { id: '1', from: 'Ministry of Lands & Survey', subject: 'Application Update', body: 'Your Certificate of Occupancy application is under review.', time: '2h ago', unread: true },
-  { id: '2', from: 'Payment System', subject: 'Payment Confirmed', body: 'Your payment of $500 has been confirmed for Application MDN-38403-293.', time: '1d ago', unread: false },
+  { id: '2', from: 'Payment System', subject: 'Payment Confirmed', body: 'Your payment of ₦500 has been confirmed for Application MDN-38403-293.', time: '1d ago', unread: false },
   { id: '3', from: 'Ministry of Lands & Survey', subject: 'Scheduled Maintenance', body: 'System maintenance is scheduled for Saturday 16 August from 10 PM.', time: '2d ago', unread: false },
 ];
 
