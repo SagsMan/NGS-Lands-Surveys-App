@@ -74,9 +74,11 @@ export default function CitizenHome() {
 
       {/* Header */}
       <View style={[styles.header, { paddingTop: insets.top + 8 }]}>
-        <Text style={styles.headerTitle}>Home</Text>
+        <View style={styles.homePill}>
+          <Text style={styles.headerTitle}>Home</Text>
+        </View>
         <Pressable style={styles.bellBtn} accessibilityLabel="Notifications">
-          <Ionicons name="notifications-outline" size={24} color={TEXT} />
+          <Ionicons name="notifications-outline" size={22} color="#fff" />
         </Pressable>
       </View>
 
@@ -278,8 +280,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20, paddingBottom: 10, backgroundColor: CARD,
     borderBottomWidth: 1, borderBottomColor: '#f0f0f0',
   },
-  headerTitle: { fontFamily: 'Inter_500Medium', fontSize: 20, color: TEXT },
-  bellBtn: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
+  homePill: {
+    backgroundColor: PRIMARY, borderRadius: 22,
+    paddingHorizontal: 18, paddingVertical: 7,
+  },
+  headerTitle: { fontFamily: 'Inter_600SemiBold', fontSize: 16, color: '#fff' },
+  bellBtn: {
+    width: 44, height: 44, borderRadius: 22, backgroundColor: PRIMARY,
+    alignItems: 'center', justifyContent: 'center',
+  },
   scroll: { flex: 1 },
   content: { paddingHorizontal: 20, paddingTop: 20 },
   section: { marginBottom: 24 },
