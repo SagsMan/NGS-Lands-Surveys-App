@@ -233,7 +233,7 @@ export function ChatBotFAB() {
 const fab = StyleSheet.create({
   wrap:      { position: 'absolute', bottom: 20, right: 18, alignItems: 'center' },
   btn:       {
-    width: 58, height: 58, borderRadius: 29, backgroundColor: CARD,
+    width: 58, height: 58, borderRadius: 29, backgroundColor: '#d6d6d6',
     alignItems: 'center', justifyContent: 'center',
     shadowColor: '#000', shadowOpacity: 0.18, shadowRadius: 10,
     shadowOffset: { width: 0, height: 4 }, elevation: 8,
