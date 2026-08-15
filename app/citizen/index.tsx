@@ -195,12 +195,12 @@ export default function CitizenHome() {
               {[0, 1, 2].map((d) => (
                 <View
                   key={d}
-                  style={[
-                    styles.dot,
-                    d === 1
-                      ? { width: 20, backgroundColor: PRIMARY }
-                      : { width: 6, backgroundColor: '#e5e7eb' },
-                  ]}
+                  style={{
+                    width: d === 1 ? 20 : 6,
+                    height: 4,
+                    borderRadius: 2,
+                    backgroundColor: d === 1 ? PRIMARY : '#e5e7eb',
+                  }}
                 />
               ))}
             </View>
