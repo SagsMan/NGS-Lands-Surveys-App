@@ -91,7 +91,7 @@ export default function StaffHome() {
               <Pressable
                 key={action.label}
                 style={({ pressed }) => [styles.quickCard, { opacity: pressed ? 0.85 : 1 }]}
-                onPress={() => router.push('/(staff)/tasks')}
+                onPress={() => router.push('/staff/tasks' as never)}
               >
                 <View style={styles.quickIcon}>
                   <Ionicons name={action.icon} size={26} color={MUTED} />
@@ -106,7 +106,7 @@ export default function StaffHome() {
         <View style={styles.section}>
           <SectionHeader title="Pending Approvals" linkText="View More" />
           <Pressable
-            onPress={() => router.push('/(staff)/applications')}
+            onPress={() => router.push('/staff/applications' as never)}
             style={({ pressed }) => [styles.approvalCard, { opacity: pressed ? 0.88 : 1 }]}
           >
             <View style={styles.approvalLeft}>

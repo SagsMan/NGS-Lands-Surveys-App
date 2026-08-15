@@ -90,7 +90,7 @@ export default function CitizenHome() {
             ].map((item) => (
               <Pressable
                 key={item.label}
-                onPress={() => router.push('/(citizen)/services')}
+                onPress={() => router.push('/citizen/services' as never)}
                 style={({ pressed }) => [styles.quickCard, { opacity: pressed ? 0.85 : 1 }]}
               >
                 <View style={styles.quickIcon}>
@@ -112,7 +112,7 @@ export default function CitizenHome() {
             <Pressable
               key={i}
               style={({ pressed }) => [styles.appCard, { opacity: pressed ? 0.9 : 1 }]}
-              onPress={() => router.push('/(citizen)/applications')}
+              onPress={() => router.push('/citizen/applications' as never)}
             >
               <View style={styles.appCardRow}>
                 <View style={styles.appCardLeft}>

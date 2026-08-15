@@ -36,9 +36,9 @@ export default function SignInScreen() {
     if (!canSubmit) return;
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     if (isStaff) {
-      router.replace('/(staff)/index' as never);
+      router.replace('/staff/' as never);
     } else {
-      router.replace('/(citizen)/index' as never);
+      router.replace('/citizen/' as never);
     }
   };
 
