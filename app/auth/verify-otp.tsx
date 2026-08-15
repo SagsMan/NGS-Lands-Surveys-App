@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  useWindowDimensions,
   View,
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
@@ -22,6 +23,13 @@ const RESEND_SECONDS = 3 * 60 + 23; // 03:23
 export default function VerifyOtpScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
+  const { width: screenWidth } = useWindowDimensions();
+
+  // Responsive square box: fill available width minus padding (48) and 5 gaps (8px each)
+  const PADDING = 48;
+  const GAP = 8;
+  const boxSize = Math.min(Math.floor((screenWidth - PADDING - GAP * (OTP_LENGTH - 1)) / OTP_LENGTH), 52);
+  const boxFontSize = Math.round(boxSize * 0.38);
 
   const [digits, setDigits] = useState<string[]>(Array(OTP_LENGTH).fill(''));
   const [secondsLeft, setSecondsLeft] = useState(RESEND_SECONDS);
@@ -105,7 +113,7 @@ export default function VerifyOtpScreen() {
         </Text>
 
         {/* OTP boxes */}
-        <View style={styles.otpRow}>
+        <View style={[styles.otpRow, { gap: GAP }]}>
           {digits.map((digit, i) => (
             <TextInput
               key={i}
@@ -114,6 +122,9 @@ export default function VerifyOtpScreen() {
               style={[
                 styles.otpBox,
                 {
+                  width: boxSize,
+                  height: boxSize,
+                  fontSize: boxFontSize,
                   backgroundColor: colors.card,
                   borderColor: digit ? colors.primary : colors.border,
                   color: colors.text,
@@ -198,17 +209,15 @@ const styles = StyleSheet.create({
   },
   otpRow: {
     flexDirection: 'row',
-    gap: 10,
     marginTop: 32,
+    alignItems: 'center',
   },
   otpBox: {
-    flex: 1,
-    height: 56,
-    borderRadius: 12,
+    borderRadius: 10,
     borderWidth: 1.5,
     textAlign: 'center',
     fontFamily: 'Inter_500Medium',
-    fontSize: 22,
+    // width, height, fontSize set dynamically from boxSize / boxFontSize
   },
   resendRow: {
     flexDirection: 'row',
