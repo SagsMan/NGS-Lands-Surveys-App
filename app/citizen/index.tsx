@@ -13,6 +13,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { RemitaPaymentModal } from '@/components/RemitaPaymentModal';
+import { ChatBotFAB } from '@/components/ChatBotFAB';
 
 const ministrySeal = require('@/assets/images/brand/ministry-seal.png');
 const landscape    = require('@/assets/images/brand/landscape.jpg');
@@ -265,6 +266,7 @@ export default function CitizenHome() {
         service="General Payment"
         amount={45000}
       />
+      <ChatBotFAB />
     </View>
   );
 }

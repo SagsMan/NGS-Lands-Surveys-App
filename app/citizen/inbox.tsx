@@ -1,5 +1,6 @@
 import React from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ChatBotFAB } from '@/components/ChatBotFAB';
 import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -46,6 +47,7 @@ export default function CitizenInbox() {
         ))}
         <View style={{ height: 20 }} />
       </ScrollView>
+      <ChatBotFAB />
     </View>
   );
 }

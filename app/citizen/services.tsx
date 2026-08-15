@@ -11,6 +11,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { RemitaPaymentModal } from '@/components/RemitaPaymentModal';
+import { ChatBotFAB } from '@/components/ChatBotFAB';
 
 const PRIMARY = '#13bf43';
 const BG = '#f7f7f7';
@@ -149,6 +150,7 @@ export default function CitizenServices() {
         service="General Payment"
         amount={45000}
       />
+      <ChatBotFAB />
     </View>
   );
 }
