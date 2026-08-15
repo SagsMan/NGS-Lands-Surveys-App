@@ -11,6 +11,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { RemitaPaymentModal } from '@/components/RemitaPaymentModal';
 
 const PRIMARY = '#13bf43';
 const BG = '#f7f7f7';
@@ -62,6 +63,7 @@ export default function CitizenApplications() {
   const [activeFilter, setActiveFilter] = useState<FilterKey>('All');
   const [filterOpen, setFilterOpen] = useState(false);
   const [selected, setSelected] = useState<typeof APPS[0] | null>(null);
+  const [paymentOpen, setPaymentOpen] = useState(false);
 
   const filtered = APPS.filter((a) => {
     const matchFilter = activeFilter === 'All' || a.status === activeFilter;
@@ -81,7 +83,7 @@ export default function CitizenApplications() {
         </Pressable>
       </View>
 
-      {selected ? (
+      {selected && (
         /* ── Application Detail ── */
         <ScrollView style={styles.scroll} contentContainerStyle={styles.detailContent} showsVerticalScrollIndicator={false}>
           <Pressable onPress={() => setSelected(null)} style={styles.detailBack}>
@@ -91,7 +93,7 @@ export default function CitizenApplications() {
 
           <DetailSection title="Details" badge={selected.status} badgeStyle={STATUS_STYLE[selected.status]}>
             {[
-              ['Full name', 'David Stone'],
+              ['Full name', 'Sagiru'],
               ['Date Submitted', '12 Aug 2026 00:35'],
               ['Property Address', 'No. 14, Tunga Layout, Minna'],
               ['Plot Number', 'NGS/MNA/CH/2026/0421'],
@@ -115,14 +117,33 @@ export default function CitizenApplications() {
           </DetailSection>
 
           <DetailSection title="Payment Information">
-            {[
-              ['Amount Paid', '₦500'],
-              ['Transaction ID', '1234-5678-9012'],
-              ['Payment Date', '12 Aug 2026, 00:34'],
-            ].map(([k, v]) => <DetailRow key={k} label={k} value={v} />)}
-            <Pressable style={styles.receiptBtn}>
-              <Text style={[styles.receiptBtnLabel, { color: PRIMARY }]}>See Receipt</Text>
-            </Pressable>
+            {selected.status === 'Awaiting Payment' ? (
+              <>
+                {[
+                  ['Amount Due', '₦45,000.00'],
+                  ['Service Fee', '₦45,000.00'],
+                  ['Payment Status', 'Pending'],
+                ].map(([k, v]) => <DetailRow key={k} label={k} value={v} />)}
+                <Pressable
+                  onPress={() => setPaymentOpen(true)}
+                  style={styles.remitaBtn}
+                >
+                  <Ionicons name="lock-closed" size={14} color="#fff" />
+                  <Text style={styles.remitaBtnLabel}>Pay with Remita</Text>
+                </Pressable>
+              </>
+            ) : (
+              <>
+                {[
+                  ['Amount Paid', '₦45,000.00'],
+                  ['Transaction ID', '270079623941'],
+                  ['Payment Date', '12 Aug 2026, 00:34'],
+                ].map(([k, v]) => <DetailRow key={k} label={k} value={v} />)}
+                <Pressable style={styles.receiptBtn}>
+                  <Text style={[styles.receiptBtnLabel, { color: PRIMARY }]}>See Receipt</Text>
+                </Pressable>
+              </>
+            )}
           </DetailSection>
 
           <Pressable style={styles.viewProgressBtn}>
@@ -130,7 +151,17 @@ export default function CitizenApplications() {
           </Pressable>
           <View style={{ height: 24 }} />
         </ScrollView>
-      ) : (
+      )}
+
+      <RemitaPaymentModal
+        visible={paymentOpen}
+        onClose={() => setPaymentOpen(false)}
+        applicationId={selected?.id ?? 'MDN-38403-292'}
+        service={selected?.title ?? 'Certificate of Occupancy'}
+        amount={45000}
+      />
+
+      {!selected && (
         /* ── Applications List ── */
         <>
           <View style={styles.searchRow}>
@@ -289,4 +320,10 @@ const styles = StyleSheet.create({
     alignItems: 'center', justifyContent: 'center', marginTop: 8,
   },
   viewProgressLabel: { color: PRIMARY, fontFamily: 'Inter_500Medium', fontSize: 16 },
+  remitaBtn: {
+    backgroundColor: PRIMARY, borderRadius: 26, height: 48,
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
+    gap: 8, marginTop: 12,
+  },
+  remitaBtnLabel: { color: '#fff', fontFamily: 'Inter_500Medium', fontSize: 15 },
 });

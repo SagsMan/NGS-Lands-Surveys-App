@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Image,
   ImageBackground,
@@ -12,6 +12,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { RemitaPaymentModal } from '@/components/RemitaPaymentModal';
 
 const ministrySeal = require('@/assets/images/brand/ministry-seal.png');
 const landscape    = require('@/assets/images/brand/landscape.jpg');
@@ -64,6 +65,7 @@ const sh = StyleSheet.create({
 
 export default function CitizenHome() {
   const insets = useSafeAreaInsets();
+  const [paymentOpen, setPaymentOpen] = useState(false);
 
   return (
     <View style={[styles.screen, { backgroundColor: BG }]}>
@@ -92,7 +94,11 @@ export default function CitizenHome() {
             ].map((item) => (
               <Pressable
                 key={item.label}
-                onPress={() => router.push('/citizen/services' as never)}
+                onPress={() =>
+                  item.label === 'Make Payments'
+                    ? setPaymentOpen(true)
+                    : router.push('/citizen/services' as never)
+                }
                 style={({ pressed }) => [styles.quickCard, { opacity: pressed ? 0.85 : 1 }]}
               >
                 <View style={styles.quickIcon}>
@@ -252,6 +258,13 @@ export default function CitizenHome() {
 
         <View style={{ height: 24 }} />
       </ScrollView>
+
+      <RemitaPaymentModal
+        visible={paymentOpen}
+        onClose={() => setPaymentOpen(false)}
+        service="General Payment"
+        amount={45000}
+      />
     </View>
   );
 }

@@ -10,6 +10,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { RemitaPaymentModal } from '@/components/RemitaPaymentModal';
 
 const PRIMARY = '#13bf43';
 const BG = '#f7f7f7';
@@ -38,6 +39,7 @@ const OTHER = [
 export default function CitizenServices() {
   const insets = useSafeAreaInsets();
   const [query, setQuery] = useState('');
+  const [paymentOpen, setPaymentOpen] = useState(false);
 
   const filteredOther = OTHER.filter((s) =>
     s.label.toLowerCase().includes(query.toLowerCase())
@@ -103,6 +105,7 @@ export default function CitizenServices() {
             {filteredOther.map((svc, i) => (
               <Pressable
                 key={svc.id}
+                onPress={() => svc.id === '11' ? setPaymentOpen(true) : undefined}
                 style={({ pressed }) => [
                   styles.listRow,
                   i < filteredOther.length - 1 && styles.listRowBorder,
@@ -139,6 +142,13 @@ export default function CitizenServices() {
 
         <View style={{ height: 20 }} />
       </ScrollView>
+
+      <RemitaPaymentModal
+        visible={paymentOpen}
+        onClose={() => setPaymentOpen(false)}
+        service="General Payment"
+        amount={45000}
+      />
     </View>
   );
 }
