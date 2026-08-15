@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { MapModal } from '@/components/MapModal';
 
 const PRIMARY = '#13bf43';
 const BG = '#f7f7f7';
@@ -10,13 +11,19 @@ const CARD = '#ffffff';
 const TEXT = '#0a0a0a';
 const MUTED = '#6b7280';
 
-// Services (application) detail view — shown when staff taps a service task
+// Niger State — Minna, Chanchaga LGA
 const APP = {
   appInfo: { application: 'Certificate of Occupancy', id: 'MLS-2026-0038488', priority: 'High', dueDate: '14 Aug 2026' },
-  applicant: { name: 'David Stone', phone: '+234 801 578 9011', email: 'davidstone@gmail.com' },
+  applicant: { name: 'Ibrahim Musa', phone: '+234 803 456 7890', email: 'ibrahimmusa@gmail.com' },
   details: {
-    address: 'Victoria Island', plot: '234', district: 'Downtown',
-    lga: 'Badagry', survey: '1234-5678-9012', landSize: '345 sq.ft',
+    address: 'No. 14, Tunga Layout, Minna',
+    plot: 'NGS/MNA/CH/2026/0421',
+    district: 'Tunga',
+    lga: 'Chanchaga',
+    survey: 'NGS-2026-4521-8834',
+    landSize: '450 sqm',
+    lat: 9.6139,
+    lng: 6.5569,
   },
   docs: ['National ID', 'Passport Photograph', 'Survey Plan', 'Proof of Ownership'],
 };
@@ -51,12 +58,13 @@ const s = StyleSheet.create({
 
 export default function StaffInspections() {
   const insets = useSafeAreaInsets();
+  const [mapVisible, setMapVisible] = useState(false);
 
   return (
     <View style={[styles.screen, { backgroundColor: BG }]}>
       <StatusBar style="dark" />
       <View style={[styles.header, { paddingTop: insets.top + 8 }]}>
-        <Text style={styles.headerTitle}>Services</Text>
+        <Text style={styles.headerTitle}>Inspections</Text>
         <Pressable style={styles.bellBtn}><Ionicons name="notifications-outline" size={24} color={TEXT} /></Pressable>
       </View>
 
@@ -71,7 +79,7 @@ export default function StaffInspections() {
 
         {/* Applicant Details */}
         <Section title="Applicant Details">
-          <InfoRow label="Full name" value={APP.applicant.name} />
+          <InfoRow label="Full Name" value={APP.applicant.name} />
           <InfoRow label="Phone Number" value={APP.applicant.phone} />
           <InfoRow label="Email" value={APP.applicant.email} />
           <View style={styles.ctaRow}>
@@ -94,7 +102,7 @@ export default function StaffInspections() {
           <InfoRow label="Local Government Area" value={APP.details.lga} />
           <InfoRow label="Survey Number" value={APP.details.survey} />
           <InfoRow label="Land Size" value={APP.details.landSize} />
-          <Pressable style={styles.mapBtn}>
+          <Pressable style={styles.mapBtn} onPress={() => setMapVisible(true)}>
             <Ionicons name="map-outline" size={16} color={PRIMARY} />
             <Text style={[styles.mapBtnLabel, { color: PRIMARY }]}>View on Map</Text>
           </Pressable>
@@ -125,6 +133,16 @@ export default function StaffInspections() {
 
         <View style={{ height: 24 }} />
       </ScrollView>
+
+      {/* Embedded map modal */}
+      <MapModal
+        visible={mapVisible}
+        onClose={() => setMapVisible(false)}
+        lat={APP.details.lat}
+        lng={APP.details.lng}
+        address={APP.details.address}
+        lga={APP.details.lga}
+      />
     </View>
   );
 }
@@ -141,10 +159,7 @@ const styles = StyleSheet.create({
   scroll: { flex: 1 },
   content: { paddingHorizontal: 16, paddingTop: 16 },
   ctaRow: { flexDirection: 'row', gap: 12, paddingVertical: 14 },
-  ctaBtn: {
-    flex: 1, flexDirection: 'row', gap: 6, alignItems: 'center', justifyContent: 'center',
-    borderWidth: 1, borderRadius: 10, paddingVertical: 10,
-  },
+  ctaBtn: { flex: 1, flexDirection: 'row', gap: 6, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderRadius: 10, paddingVertical: 10 },
   ctaBtnLabel: { fontFamily: 'Inter_500Medium', fontSize: 14 },
   mapBtn: { flexDirection: 'row', gap: 6, alignItems: 'center', justifyContent: 'center', paddingVertical: 14 },
   mapBtnLabel: { fontFamily: 'Inter_500Medium', fontSize: 14 },

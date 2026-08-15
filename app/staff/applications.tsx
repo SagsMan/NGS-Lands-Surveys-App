@@ -10,6 +10,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { MapModal } from '@/components/MapModal';
 
 const PRIMARY = '#13bf43';
 const BG = '#f7f7f7';
@@ -19,25 +20,35 @@ const MUTED = '#6b7280';
 const DANGER = '#ef4444';
 
 const APPS = [
-  { id: '1', title: 'Certificate of Occupancy', applicant: 'David Stone', appId: 'MLS-2026-001256', priority: 'High Priority', status: 'Under Review' },
-  { id: '2', title: 'Certificate of Occupancy', applicant: 'David Stone', appId: 'MLS-2026-001256', priority: 'High Priority', status: 'Under Review' },
-  { id: '3', title: 'Certificate of Occupancy', applicant: 'David Stone', appId: 'MLS-2026-001256', priority: 'High Priority', status: 'Under Review' },
-  { id: '4', title: 'Certificate of Occupancy', applicant: 'David Stone', appId: 'MLS-2026-001256', priority: 'High Priority', status: 'Under Review' },
+  { id: '1', title: 'Certificate of Occupancy', applicant: 'Ibrahim Musa',   appId: 'MLS-2026-001256', priority: 'High Priority',   status: 'Under Review' },
+  { id: '2', title: 'Right of Occupancy',        applicant: 'Aisha Bello',    appId: 'MLS-2026-001189', priority: 'Medium Priority', status: 'Under Review' },
+  { id: '3', title: 'Land Allocation',           applicant: 'Yusuf Abdullahi',appId: 'MLS-2026-001034', priority: 'High Priority',   status: 'Under Review' },
+  { id: '4', title: 'Title Transfer',            applicant: 'Fatima Umar',    appId: 'MLS-2026-000978', priority: 'Low Priority',    status: 'Under Review' },
 ];
 
 type ChecklistItem = { label: string; approved: boolean | null };
 const CHECKLIST: ChecklistItem[] = [
-  { label: 'Application Identity verified', approved: true },
+  { label: 'Applicant identity verified',   approved: true },
   { label: 'Documents verified',            approved: null },
   { label: 'Payment confirmed',             approved: null },
   { label: 'Site inspection completed',     approved: null },
   { label: 'Beacon confirmed',              approved: null },
 ];
 
+// Niger State — Minna property detail
 const APP_DETAIL = {
   appInfo: { application: 'Certificate of Occupancy', id: 'MLS-2026-0038488', priority: 'High', dueDate: '14 Aug 2026' },
-  applicant: { name: 'David Stone', phone: '+234 801 578 9011', email: 'davidstone@gmail.com' },
-  property: { address: 'Victoria Island', plot: '234', district: 'Downtown', lga: 'Badagry', survey: '1234-5678-9012', size: '345 sq.ft' },
+  applicant: { name: 'Ibrahim Musa', phone: '+234 803 456 7890', email: 'ibrahimmusa@gmail.com' },
+  property: {
+    address: 'No. 14, Tunga Layout, Minna',
+    plot: 'NGS/MNA/CH/2026/0421',
+    district: 'Tunga',
+    lga: 'Chanchaga',
+    survey: 'NGS-2026-4521-8834',
+    size: '450 sqm',
+    lat: 9.6139,
+    lng: 6.5569,
+  },
   docs: ['National ID', 'Passport Photograph', 'Survey Plan', 'Proof of Ownership'],
 };
 
@@ -75,6 +86,7 @@ export default function StaffApplications() {
   const [selected, setSelected] = useState<typeof APPS[0] | null>(null);
   const [checklist, setChecklist] = useState<ChecklistItem[]>(CHECKLIST);
   const [observation, setObservation] = useState('');
+  const [mapVisible, setMapVisible] = useState(false);
 
   const toggle = (index: number, value: boolean) => {
     const next = [...checklist];
@@ -89,7 +101,7 @@ export default function StaffApplications() {
         <View style={[styles.header, { paddingTop: insets.top + 8 }]}>
           <Pressable onPress={() => setSelected(null)} style={styles.backRow}>
             <Ionicons name="chevron-back" size={22} color={TEXT} />
-            <Text style={styles.headerTitle}>My Applications</Text>
+            <Text style={styles.headerTitle}>Application Review</Text>
           </Pressable>
           <Pressable style={styles.bellBtn}><Ionicons name="notifications-outline" size={24} color={TEXT} /></Pressable>
         </View>
@@ -103,7 +115,7 @@ export default function StaffApplications() {
           </Section>
 
           <Section title="Applicant Information">
-            <InfoRow label="Full name" value={APP_DETAIL.applicant.name} />
+            <InfoRow label="Full Name" value={APP_DETAIL.applicant.name} />
             <InfoRow label="Phone Number" value={APP_DETAIL.applicant.phone} />
             <InfoRow label="Email" value={APP_DETAIL.applicant.email} />
             <View style={styles.ctaRow}>
@@ -125,7 +137,7 @@ export default function StaffApplications() {
             <InfoRow label="Local Government Area" value={APP_DETAIL.property.lga} />
             <InfoRow label="Survey Number" value={APP_DETAIL.property.survey} />
             <InfoRow label="Land Size" value={APP_DETAIL.property.size} />
-            <Pressable style={styles.mapBtn}>
+            <Pressable style={styles.mapBtn} onPress={() => setMapVisible(true)}>
               <Ionicons name="map-outline" size={16} color={PRIMARY} />
               <Text style={[styles.mapBtnLabel, { color: PRIMARY }]}>View on Map</Text>
             </Pressable>
@@ -166,12 +178,10 @@ export default function StaffApplications() {
             </View>
           </View>
 
-          {/* Approve Button */}
           <Pressable style={[styles.approveBtn, { backgroundColor: PRIMARY }]}>
             <Text style={styles.approveBtnLabel}>Approve Application</Text>
           </Pressable>
 
-          {/* Observation */}
           <View style={styles.obsWrap}>
             <Text style={sec.title}>Observation</Text>
             <TextInput
@@ -186,7 +196,6 @@ export default function StaffApplications() {
             />
           </View>
 
-          {/* Submit buttons */}
           <Pressable style={[styles.submitBtn, { backgroundColor: PRIMARY }]}>
             <Text style={styles.submitBtnLabel}>Submit</Text>
           </Pressable>
@@ -205,6 +214,16 @@ export default function StaffApplications() {
 
           <View style={{ height: 24 }} />
         </ScrollView>
+
+        {/* Embedded map modal */}
+        <MapModal
+          visible={mapVisible}
+          onClose={() => setMapVisible(false)}
+          lat={APP_DETAIL.property.lat}
+          lng={APP_DETAIL.property.lng}
+          address={APP_DETAIL.property.address}
+          lga={APP_DETAIL.property.lga}
+        />
       </View>
     );
   }
@@ -219,11 +238,23 @@ export default function StaffApplications() {
     <View style={[styles.screen, { backgroundColor: BG }]}>
       <StatusBar style="dark" />
       <View style={[styles.header, { paddingTop: insets.top + 8 }]}>
-        <Text style={styles.headerTitle}>My Applications</Text>
+        <Text style={styles.headerTitle}>Applications</Text>
         <Pressable style={styles.bellBtn}><Ionicons name="notifications-outline" size={24} color={TEXT} /></Pressable>
       </View>
 
       <ScrollView style={styles.scroll} contentContainerStyle={styles.listContent} showsVerticalScrollIndicator={false}>
+        {/* Search */}
+        <View style={styles.searchBar}>
+          <Ionicons name="search-outline" size={18} color={MUTED} style={{ marginRight: 8 }} />
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search applications…"
+            placeholderTextColor={MUTED}
+            value={query}
+            onChangeText={setQuery}
+          />
+        </View>
+
         {filtered.map((app) => (
           <Pressable
             key={app.id}
@@ -259,6 +290,12 @@ const styles = StyleSheet.create({
   bellBtn: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
   scroll: { flex: 1 },
   listContent: { paddingHorizontal: 16, paddingTop: 12 },
+  searchBar: {
+    flexDirection: 'row', alignItems: 'center', backgroundColor: CARD,
+    borderRadius: 12, paddingHorizontal: 14, paddingVertical: 12, marginBottom: 12,
+    shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 4, shadowOffset: { width: 0, height: 1 }, elevation: 1,
+  },
+  searchInput: { flex: 1, fontFamily: 'Inter_400Regular', fontSize: 15, color: TEXT },
   appCard: {
     backgroundColor: CARD, borderRadius: 12, padding: 14, marginBottom: 10,
     shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 6, shadowOffset: { width: 0, height: 2 }, elevation: 1,

@@ -93,12 +93,12 @@ export default function CitizenApplications() {
             {[
               ['Full name', 'David Stone'],
               ['Date Submitted', '12 Aug 2026 00:35'],
-              ['Property Address', 'Victoria Island'],
-              ['Plot Number', '234'],
-              ['District', 'Downtown'],
-              ['Local Government Area', 'Badagry'],
-              ['Survey Number', '1234-5678-9012'],
-              ['Land Size', '345 sq.ft'],
+              ['Property Address', 'No. 14, Tunga Layout, Minna'],
+              ['Plot Number', 'NGS/MNA/CH/2026/0421'],
+              ['District', 'Tunga'],
+              ['Local Government Area', 'Chanchaga'],
+              ['Survey Number', 'NGS-2026-4521-8834'],
+              ['Land Size', '450 sqm'],
             ].map(([k, v]) => <DetailRow key={k} label={k} value={v} />)}
           </DetailSection>
 
