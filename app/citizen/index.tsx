@@ -193,7 +193,15 @@ export default function CitizenHome() {
             <Pressable><Text style={[styles.announceLink, { color: PRIMARY }]}>Learn More</Text></Pressable>
             <View style={styles.dotRow}>
               {[0, 1, 2].map((d) => (
-                <View key={d} style={[styles.dot, { backgroundColor: d === 1 ? PRIMARY : '#d1d5db' }]} />
+                <View
+                  key={d}
+                  style={[
+                    styles.dot,
+                    d === 1
+                      ? { width: 20, backgroundColor: PRIMARY }
+                      : { width: 6, backgroundColor: '#e5e7eb' },
+                  ]}
+                />
               ))}
             </View>
           </View>
@@ -314,8 +322,8 @@ const styles = StyleSheet.create({
   announceBody: { fontFamily: 'Inter_400Regular', fontSize: 13, color: MUTED, textAlign: 'center', lineHeight: 20, marginBottom: 8 },
   announceTime: { fontFamily: 'Inter_400Regular', fontSize: 12, color: MUTED, marginBottom: 8 },
   announceLink: { fontFamily: 'Inter_500Medium', fontSize: 13, marginBottom: 14 },
-  dotRow: { flexDirection: 'row', gap: 6 },
-  dot: { width: 7, height: 7, borderRadius: 3.5 },
+  dotRow: { flexDirection: 'row', gap: 4, alignItems: 'center' },
+  dot: { height: 4, borderRadius: 2 },
   // Help & Support card — Figma Frame 35
   helpCard: {
     borderRadius: 12,
