@@ -11,10 +11,10 @@ const TEXT = '#0a0a0a';
 const MUTED = '#6b7280';
 
 const TASKS = [
-  { id: '1', title: 'Certificate of Occupancy', applicant: 'David Stone', appId: 'MLS-2026-001256', priority: 'High Priority', badge: 'Due Today',  badgeBg: '#fee2e2', badgeColor: '#991b1b' },
-  { id: '2', title: 'Certificate of Occupancy', applicant: 'David Stone', appId: 'MLS-2026-001256', priority: 'High Priority', badge: null, badgeBg: '', badgeColor: '' },
-  { id: '3', title: 'Certificate of Occupancy', applicant: 'David Stone', appId: 'MLS-2026-001256', priority: 'High Priority', badge: null, badgeBg: '', badgeColor: '' },
-  { id: '4', title: 'Certificate of Occupancy', applicant: 'David Stone', appId: 'MLS-2026-001256', priority: 'High Priority', badge: null, badgeBg: '', badgeColor: '' },
+  { id: '1', title: 'Certificate of Occupancy', applicant: 'Ibrahim Musa',    appId: 'MLS-2026-001256', priority: 'High Priority',   badge: 'Due Today', badgeBg: '#fee2e2', badgeColor: '#991b1b' },
+  { id: '2', title: 'Right of Occupancy',        applicant: 'Aisha Bello',     appId: 'MLS-2026-001189', priority: 'Medium Priority', badge: null, badgeBg: '', badgeColor: '' },
+  { id: '3', title: 'Land Allocation',           applicant: 'Yusuf Abdullahi', appId: 'MLS-2026-001034', priority: 'High Priority',   badge: null, badgeBg: '', badgeColor: '' },
+  { id: '4', title: 'Title Transfer',            applicant: 'Fatima Umar',     appId: 'MLS-2026-000978', priority: 'Low Priority',    badge: null, badgeBg: '', badgeColor: '' },
 ];
 
 export default function StaffTasks() {

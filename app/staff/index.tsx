@@ -112,7 +112,7 @@ export default function StaffHome() {
             <View style={styles.approvalLeft}>
               <Text style={styles.approvalTitle}>Certificate of Occupancy</Text>
               <Text style={styles.approvalMeta}>Waiting · 2 Days</Text>
-              <Text style={styles.approvalApplicant}>Applicant: David Stone</Text>
+              <Text style={styles.approvalApplicant}>Applicant: Ibrahim Musa</Text>
             </View>
             <Pressable style={styles.reviewBtn}>
               <Text style={styles.reviewBtnLabel}>Review</Text>
