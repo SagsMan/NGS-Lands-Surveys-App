@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Image,
+  ImageBackground,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -13,13 +14,14 @@ import { router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 
 const ministrySeal = require('@/assets/images/brand/ministry-seal.png');
+const landscape    = require('@/assets/images/brand/landscape.jpg');
 
 const PRIMARY = '#13bf43';
+const HELP_GREEN = '#1BB53D';   // Figma: #1BB53D
 const BG = '#f7f7f7';
 const CARD = '#ffffff';
 const TEXT = '#0a0a0a';
 const MUTED = '#6b7280';
-const DEEP_GREEN = '#0b3d26';
 
 type StatusKey = 'Pending' | 'Confirmed' | 'Completed' | 'Under Review' | 'Draft' | 'Awaiting Payment' | 'Approved' | 'Rejected';
 const STATUS_COLORS: Record<StatusKey, { bg: string; text: string }> = {
@@ -197,21 +199,47 @@ export default function CitizenHome() {
           </View>
         </View>
 
-        {/* Help & Support */}
-        <View style={[styles.helpCard, { backgroundColor: DEEP_GREEN }]}>
-          <Text style={styles.helpTitle}>Help and Support</Text>
-          <Text style={styles.helpSub}>Need help with your application or a ministry service?</Text>
-          {['FAQs', 'Contact Support', 'Submit a Complaint'].map((item, i, arr) => (
-            <Pressable key={item} style={({ pressed }) => [
-              styles.helpRow,
-              i < arr.length - 1 && styles.helpRowBorder,
-              { opacity: pressed ? 0.7 : 1 },
-            ]}>
-              <Text style={styles.helpRowTitle}>{item}</Text>
-              <Ionicons name="chevron-forward" size={18} color="rgba(255,255,255,0.6)" />
-            </Pressable>
+        {/* Help & Support — landscape bg + #1BB53D green overlay per Figma */}
+        <ImageBackground
+          source={landscape}
+          resizeMode="cover"
+          style={styles.helpCard}
+          imageStyle={{ borderRadius: 12 }}
+        >
+          {/* Green overlay */}
+          <View style={styles.helpOverlay} />
+
+          {/* Header block */}
+          <View style={styles.helpHeader}>
+            <Text style={styles.helpTitle}>Help and Support</Text>
+            <Text style={styles.helpSub}>
+              Need help with your application or a ministry service?
+            </Text>
+          </View>
+
+          {/* Divider after header */}
+          <View style={styles.helpDivider} />
+
+          {/* Rows: FAQs, Contact Support, Submit a Complaint */}
+          {[
+            { title: 'FAQs',                sub: 'Find answers to common questions' },
+            { title: 'Contact Support',      sub: 'Reach our support team for assistance' },
+            { title: 'Submit a Complaint',   sub: 'Report an issue or share feedback' },
+          ].map((item, i, arr) => (
+            <React.Fragment key={item.title}>
+              <Pressable
+                style={({ pressed }) => [styles.helpRow, { opacity: pressed ? 0.7 : 1 }]}
+              >
+                <View style={styles.helpRowLeft}>
+                  <Text style={styles.helpRowTitle}>{item.title}</Text>
+                  <Text style={styles.helpRowSub}>{item.sub}</Text>
+                </View>
+                <Ionicons name="chevron-forward" size={14} color="#FFFFFF" />
+              </Pressable>
+              {i < arr.length - 1 && <View style={styles.helpDivider} />}
+            </React.Fragment>
           ))}
-        </View>
+        </ImageBackground>
 
         <View style={{ height: 24 }} />
       </ScrollView>
@@ -288,10 +316,63 @@ const styles = StyleSheet.create({
   announceLink: { fontFamily: 'Inter_500Medium', fontSize: 13, marginBottom: 14 },
   dotRow: { flexDirection: 'row', gap: 6 },
   dot: { width: 7, height: 7, borderRadius: 3.5 },
-  helpCard: { borderRadius: 16, padding: 20, marginBottom: 8 },
-  helpTitle: { fontFamily: 'Inter_600SemiBold', fontSize: 17, color: '#fff', marginBottom: 6 },
-  helpSub: { fontFamily: 'Inter_400Regular', fontSize: 13, color: 'rgba(255,255,255,0.7)', lineHeight: 20, marginBottom: 16 },
-  helpRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 14 },
-  helpRowBorder: { borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.15)' },
-  helpRowTitle: { fontFamily: 'Inter_400Regular', fontSize: 15, color: '#fff' },
+  // Help & Support card — Figma Frame 35
+  helpCard: {
+    borderRadius: 12,
+    padding: 16,
+    gap: 0,
+    marginBottom: 8,
+    overflow: 'hidden',
+  },
+  helpOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: HELP_GREEN,
+    opacity: 0.88,
+  },
+  helpHeader: {
+    gap: 2,
+    marginBottom: 0,
+  },
+  helpTitle: {
+    fontFamily: 'Inter_500Medium',
+    fontSize: 16,
+    lineHeight: 24,
+    color: '#FFFFFF',
+  },
+  helpSub: {
+    fontFamily: 'Inter_400Regular',
+    fontSize: 12,
+    lineHeight: 18,
+    color: '#FFFFFF',
+    opacity: 0.7,
+    marginTop: 2,
+  },
+  helpDivider: {
+    height: 1,
+    backgroundColor: 'rgba(255,255,255,0.5)',
+    marginVertical: 0,
+  },
+  helpRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    height: 39,
+    gap: 10,
+  },
+  helpRowLeft: {
+    flex: 1,
+  },
+  helpRowTitle: {
+    fontFamily: 'Inter_400Regular',
+    fontSize: 14,
+    lineHeight: 21,
+    color: '#FFFFFF',
+  },
+  helpRowSub: {
+    fontFamily: 'Inter_400Regular',
+    fontSize: 12,
+    lineHeight: 18,
+    color: '#FFFFFF',
+    opacity: 0.7,
+  },
 });
