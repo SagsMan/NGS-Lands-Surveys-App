@@ -196,10 +196,11 @@ export default function CitizenHome() {
                 <View
                   key={d}
                   style={{
-                    width: d === 1 ? 20 : 6,
-                    height: 4,
+                    width: 4,
+                    height: d === 1 ? 16 : 8,
                     borderRadius: 2,
-                    backgroundColor: d === 1 ? PRIMARY : '#e5e7eb',
+                    backgroundColor: d === 1 ? PRIMARY : '#d1d5db',
+                    opacity: d === 1 ? 1 : 0.5,
                   }}
                 />
               ))}
