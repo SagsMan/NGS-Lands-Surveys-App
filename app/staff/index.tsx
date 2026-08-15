@@ -159,7 +159,16 @@ export default function StaffHome() {
             <Pressable><Text style={[styles.announceLink, { color: PRIMARY }]}>Read More</Text></Pressable>
             <View style={styles.dotRow}>
               {[0, 1, 2].map((d) => (
-                <View key={d} style={[styles.dot, { backgroundColor: d === 1 ? PRIMARY : '#d1d5db' }]} />
+                <View
+                  key={d}
+                  style={{
+                    width: 4,
+                    height: d === 1 ? 16 : 8,
+                    borderRadius: 2,
+                    backgroundColor: d === 1 ? PRIMARY : '#d1d5db',
+                    opacity: d === 1 ? 1 : 0.5,
+                  }}
+                />
               ))}
             </View>
           </View>
