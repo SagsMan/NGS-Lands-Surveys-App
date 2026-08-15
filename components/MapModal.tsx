@@ -5,10 +5,9 @@ import {
   StyleSheet,
   Text,
   View,
-  ActivityIndicator,
   Platform,
 } from 'react-native';
-import { WebView } from 'react-native-webview';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -23,68 +22,15 @@ interface MapModalProps {
   lga?: string;
 }
 
-/** Builds a self-contained HTML page with Leaflet + Google Satellite tiles */
-function buildMapHtml(lat: number, lng: number, address: string): string {
-  return `<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body, #map { width: 100%; height: 100%; }
-  </style>
-</head>
-<body>
-<div id="map"></div>
-<script>
-  var map = L.map('map', {
-    center: [${lat}, ${lng}],
-    zoom: 18,
-    zoomControl: true,
-    attributionControl: true
-  });
-
-  /* Google Satellite tiles — high-res real imagery */
-  L.tileLayer(
-    'https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',
-    {
-      attribution: '&copy; Google Maps',
-      maxZoom: 22,
-      subdomains: ['mt0','mt1','mt2','mt3']
-    }
-  ).addTo(map);
-
-  /* Custom green marker matching app brand */
-  var icon = L.divIcon({
-    html: '<div style="width:28px;height:38px;position:relative;">'
-        + '<svg viewBox="0 0 28 38" xmlns="http://www.w3.org/2000/svg">'
-        + '<path d="M14 0C6.3 0 0 6.3 0 14c0 10.5 14 24 14 24S28 24.5 28 14C28 6.3 21.7 0 14 0z" fill="#13bf43"/>'
-        + '<circle cx="14" cy="14" r="6" fill="white"/>'
-        + '</svg>'
-        + '</div>',
-    iconSize: [28, 38],
-    iconAnchor: [14, 38],
-    popupAnchor: [0, -40],
-    className: ''
-  });
-
-  L.marker([${lat}, ${lng}], { icon: icon })
-    .addTo(map)
-    .bindPopup('<b style="font-size:13px;">${address.replace(/'/g, "\\'")}' + '</b>')
-    .openPopup();
-</script>
-</body>
-</html>`;
-}
-
 export function MapModal({ visible, onClose, lat, lng, address, lga }: MapModalProps) {
   const insets = useSafeAreaInsets();
-  const [loading, setLoading] = React.useState(true);
 
-  const html = React.useMemo(() => buildMapHtml(lat, lng, address), [lat, lng, address]);
+  const region = {
+    latitude: lat,
+    longitude: lng,
+    latitudeDelta: 0.004,
+    longitudeDelta: 0.004,
+  };
 
   return (
     <Modal
@@ -108,25 +54,24 @@ export function MapModal({ visible, onClose, lat, lng, address, lga }: MapModalP
           </Pressable>
         </View>
 
-        {/* Satellite Map */}
-        <View style={styles.mapContainer}>
-          {loading && (
-            <View style={styles.loadingOverlay}>
-              <ActivityIndicator size="large" color={PRIMARY} />
-              <Text style={styles.loadingText}>Loading satellite view…</Text>
-            </View>
-          )}
-          <WebView
-            source={{ html }}
-            style={styles.webview}
-            onLoadStart={() => setLoading(true)}
-            onLoadEnd={() => setLoading(false)}
-            javaScriptEnabled
-            domStorageEnabled
-            startInLoadingState={false}
-            originWhitelist={['*']}
+        {/* Native satellite map — loads instantly, no CDN */}
+        <MapView
+          style={styles.map}
+          provider={PROVIDER_GOOGLE}
+          mapType="hybrid"
+          initialRegion={region}
+          showsUserLocation={false}
+          showsBuildings
+          showsCompass
+          rotateEnabled={false}
+        >
+          <Marker
+            coordinate={{ latitude: lat, longitude: lng }}
+            title={address}
+            description={lga ? `${lga} LGA, Niger State` : 'Niger State'}
+            pinColor={PRIMARY}
           />
-        </View>
+        </MapView>
 
         {/* Footer */}
         <View style={[styles.footer, { paddingBottom: insets.bottom + 8 }]}>
@@ -160,17 +105,7 @@ const styles = StyleSheet.create({
     alignItems: 'center', justifyContent: 'center',
     flexShrink: 0,
   },
-  mapContainer: { flex: 1 },
-  webview: { flex: 1 },
-  loadingOverlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: '#1a1a2e',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 12,
-    zIndex: 10,
-  },
-  loadingText: { fontFamily: 'Inter_400Regular', fontSize: 14, color: '#e5e7eb' },
+  map: { flex: 1 },
   footer: {
     flexDirection: 'row',
     alignItems: 'center',
