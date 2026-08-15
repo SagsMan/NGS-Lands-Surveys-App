@@ -5,6 +5,7 @@
 import React, { useState } from 'react';
 import {
   ActivityIndicator,
+  Image,
   KeyboardAvoidingView,
   Modal,
   Platform,
@@ -17,6 +18,8 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+const remitaLogo = require('@/assets/images/brand/remita-logo.png');
 
 const PRIMARY   = '#13bf43';
 const REMITA_BG = '#004c97';   // Remita blue used only for branding badge
@@ -58,19 +61,20 @@ const USSD_CODES: Record<string, string> = {
 function RemitaBadge() {
   return (
     <View style={badge.wrap}>
-      <View style={[badge.pill, { backgroundColor: REMITA_BG }]}>
-        <Text style={badge.r}>R</Text>
-        <Text style={badge.label}>emita</Text>
+      <Image source={remitaLogo} style={badge.logo} resizeMode="contain" />
+      <View style={badge.divider} />
+      <View style={badge.securedWrap}>
+        <Ionicons name="shield-checkmark" size={12} color="#22c55e" />
+        <Text style={badge.secured}>Secured Payment</Text>
       </View>
-      <Text style={badge.secured}>Secured Payment</Text>
     </View>
   );
 }
 const badge = StyleSheet.create({
-  wrap: { alignItems: 'center', flexDirection: 'row', gap: 8 },
-  pill: { flexDirection: 'row', alignItems: 'center', borderRadius: 6, paddingHorizontal: 8, paddingVertical: 3 },
-  r: { color: '#fff', fontFamily: 'Inter_700Bold', fontSize: 14, letterSpacing: -0.5 },
-  label: { color: '#fff', fontFamily: 'Inter_400Regular', fontSize: 14 },
+  wrap: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+  logo: { width: 90, height: 32 },
+  divider: { width: 1, height: 22, backgroundColor: '#e5e7eb' },
+  securedWrap: { flexDirection: 'row', alignItems: 'center', gap: 4 },
   secured: { fontFamily: 'Inter_400Regular', fontSize: 11, color: MUTED },
 });
 
