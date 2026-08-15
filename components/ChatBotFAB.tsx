@@ -222,7 +222,7 @@ export function ChatBotFAB() {
           <Image source={ministryLogo} style={fab.logo} resizeMode="contain" />
         </Pressable>
         <View style={fab.badge}>
-          <Text style={fab.badgeText}>Chat</Text>
+          <Text style={fab.badgeText}>Chat Me!</Text>
         </View>
       </Animated.View>
     </>
