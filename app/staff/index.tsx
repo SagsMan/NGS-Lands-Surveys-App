@@ -54,7 +54,7 @@ export default function StaffHome() {
 
         {/* Greeting */}
         <View style={styles.greetRow}>
-          <Text style={styles.greetText}>Good Morning, <Text style={styles.greetName}>Alsha</Text></Text>
+          <Text style={styles.greetText}>Good Morning, <Text style={styles.greetName}>Zaguru</Text></Text>
           <Pressable style={styles.checkInBtn}>
             <Text style={styles.checkInLabel}>Check-in</Text>
           </Pressable>

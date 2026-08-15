@@ -35,8 +35,8 @@ export default function StaffProfile() {
           <View style={[styles.avatarCircle, { backgroundColor: '#dbeafe' }]}>
             <Ionicons name="person" size={48} color="#1e40af" />
           </View>
-          <Text style={styles.name}>Alsha Ibrahim</Text>
-          <Text style={styles.email}>alsha.ibrahim@mls.gov.ng</Text>
+          <Text style={styles.name}>Zaguru</Text>
+          <Text style={styles.email}>zaguru@mls.gov.ng</Text>
           <View style={styles.staffBadge}>
             <Text style={styles.staffBadgeLabel}>Staff · Land Survey Division</Text>
           </View>

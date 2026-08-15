@@ -9,6 +9,7 @@ import {
   View,
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
+import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
@@ -31,10 +32,20 @@ export default function VerifyOtpScreen() {
   const boxSize = Math.min(Math.floor((screenWidth - PADDING - GAP * (OTP_LENGTH - 1)) / OTP_LENGTH), 52);
   const boxFontSize = Math.round(boxSize * 0.38);
 
+  const [otpMethod, setOtpMethod] = useState<'email' | 'sms'>('email');
   const [digits, setDigits] = useState<string[]>(Array(OTP_LENGTH).fill(''));
   const [secondsLeft, setSecondsLeft] = useState(RESEND_SECONDS);
   const [canResend, setCanResend] = useState(false);
   const inputRefs = useRef<Array<TextInput | null>>([]);
+
+  const switchMethod = (method: 'email' | 'sms') => {
+    if (method === otpMethod) return;
+    Haptics.selectionAsync();
+    setOtpMethod(method);
+    setDigits(Array(OTP_LENGTH).fill(''));
+    setSecondsLeft(RESEND_SECONDS);
+    setCanResend(false);
+  };
 
   // Countdown timer
   useEffect(() => {
@@ -107,10 +118,52 @@ export default function VerifyOtpScreen() {
         </Pressable>
 
         {/* Title */}
-        <Text style={[styles.title, { color: colors.text }]}>Verify Email</Text>
-        <Text style={[styles.subtitle, { color: colors.mutedForeground }]}>
-          Check your email for a six digit one-time pin
+        <Text style={[styles.title, { color: colors.text }]}>
+          {otpMethod === 'email' ? 'Verify Email' : 'Verify Phone'}
         </Text>
+        <Text style={[styles.subtitle, { color: colors.mutedForeground }]}>
+          {otpMethod === 'email'
+            ? 'Check your email for a six digit one-time pin'
+            : 'Enter the six digit code sent to your phone via SMS'}
+        </Text>
+
+        {/* Email / SMS toggle */}
+        <View style={styles.toggleRow}>
+          <Pressable
+            onPress={() => switchMethod('email')}
+            style={[
+              styles.toggleBtn,
+              otpMethod === 'email' && { backgroundColor: colors.primary },
+            ]}
+          >
+            <Ionicons
+              name="mail-outline"
+              size={14}
+              color={otpMethod === 'email' ? '#fff' : colors.mutedForeground}
+            />
+            <Text style={[
+              styles.toggleLabel,
+              { color: otpMethod === 'email' ? '#fff' : colors.mutedForeground },
+            ]}>Email</Text>
+          </Pressable>
+          <Pressable
+            onPress={() => switchMethod('sms')}
+            style={[
+              styles.toggleBtn,
+              otpMethod === 'sms' && { backgroundColor: colors.primary },
+            ]}
+          >
+            <Ionicons
+              name="phone-portrait-outline"
+              size={14}
+              color={otpMethod === 'sms' ? '#fff' : colors.mutedForeground}
+            />
+            <Text style={[
+              styles.toggleLabel,
+              { color: otpMethod === 'sms' ? '#fff' : colors.mutedForeground },
+            ]}>SMS</Text>
+          </Pressable>
+        </View>
 
         {/* OTP boxes */}
         <View style={[styles.otpRow, { gap: GAP }]}>
@@ -218,6 +271,26 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'Inter_500Medium',
     // width, height, fontSize set dynamically from boxSize / boxFontSize
+  },
+  toggleRow: {
+    flexDirection: 'row',
+    marginTop: 20,
+    backgroundColor: 'rgba(0,0,0,0.08)',
+    borderRadius: 24,
+    padding: 3,
+    alignSelf: 'flex-start',
+  },
+  toggleBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
+  },
+  toggleLabel: {
+    fontFamily: 'Inter_500Medium',
+    fontSize: 13,
   },
   resendRow: {
     flexDirection: 'row',

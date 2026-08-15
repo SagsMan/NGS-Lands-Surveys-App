@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
+import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
@@ -69,9 +70,11 @@ function LabeledInput({
             accessibilityLabel={hidden ? 'Show password' : 'Hide password'}
             style={fieldStyles.eyeBtn}
           >
-            <Text style={[fieldStyles.eyeIcon, { color: colors.mutedForeground }]}>
-              {hidden ? '○' : '●'}
-            </Text>
+            <Ionicons
+              name={hidden ? 'eye-off-outline' : 'eye-outline'}
+              size={20}
+              color={colors.mutedForeground}
+            />
           </Pressable>
         )}
       </View>

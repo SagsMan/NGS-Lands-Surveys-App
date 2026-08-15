@@ -37,8 +37,8 @@ export default function CitizenProfile() {
           <View style={[styles.avatarCircle, { backgroundColor: PRIMARY + '20' }]}>
             <Ionicons name="person" size={48} color={PRIMARY} />
           </View>
-          <Text style={styles.name}>Ibrahim Musa</Text>
-          <Text style={styles.email}>ibrahimmusa@gmail.com</Text>
+          <Text style={styles.name}>Sagiru</Text>
+          <Text style={styles.email}>sagiru@gmail.com</Text>
           <View style={styles.citizenBadge}>
             <Text style={styles.citizenBadgeLabel}>Citizen</Text>
           </View>

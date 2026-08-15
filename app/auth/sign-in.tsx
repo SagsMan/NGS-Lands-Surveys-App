@@ -9,6 +9,7 @@ import {
   View,
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
+import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router, useLocalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
@@ -125,9 +126,11 @@ export default function SignInScreen() {
                 accessibilityLabel={passwordHidden ? 'Show password' : 'Hide password'}
                 style={styles.eyeBtn}
               >
-                <Text style={[styles.eyeIcon, { color: colors.mutedForeground }]}>
-                  {passwordHidden ? '○' : '●'}
-                </Text>
+                <Ionicons
+                  name={passwordHidden ? 'eye-off-outline' : 'eye-outline'}
+                  size={20}
+                  color={colors.mutedForeground}
+                />
               </Pressable>
             </View>
             <Pressable
