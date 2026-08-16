@@ -1,5 +1,6 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
+  Alert,
   Image,
   ImageBackground,
   Pressable,
@@ -9,6 +10,7 @@ import {
   View,
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
+import * as LocalAuthentication from 'expo-local-authentication';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router, useLocalSearchParams } from 'expo-router';
@@ -29,17 +31,55 @@ export default function SignInScreen() {
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [passwordHidden, setPasswordHidden] = useState(true);
+  const [biometricAvailable, setBiometricAvailable] = useState(false);
+  const [biometricType, setBiometricType] = useState<'fingerprint' | 'face' | 'none'>('none');
 
   const passwordRef = useRef<TextInput>(null);
   const canSubmit = identifier.trim() !== '' && password !== '';
 
-  const submit = () => {
-    if (!canSubmit) return;
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+  useEffect(() => {
+    (async () => {
+      const compatible = await LocalAuthentication.hasHardwareAsync();
+      const enrolled = await LocalAuthentication.isEnrolledAsync();
+      if (compatible && enrolled) {
+        setBiometricAvailable(true);
+        const types = await LocalAuthentication.supportedAuthenticationTypesAsync();
+        if (types.includes(LocalAuthentication.AuthenticationType.FACIAL_RECOGNITION)) {
+          setBiometricType('face');
+        } else {
+          setBiometricType('fingerprint');
+        }
+      }
+    })();
+  }, []);
+
+  const navigateHome = () => {
     if (isStaff) {
       router.replace('/staff/' as never);
     } else {
       router.replace('/citizen/' as never);
+    }
+  };
+
+  const submit = () => {
+    if (!canSubmit) return;
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    navigateHome();
+  };
+
+  const loginWithBiometric = async () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    const result = await LocalAuthentication.authenticateAsync({
+      promptMessage: isStaff ? 'Staff biometric login' : 'Citizen biometric login',
+      fallbackLabel: 'Use Password',
+      cancelLabel: 'Cancel',
+      disableDeviceFallback: false,
+    });
+    if (result.success) {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      navigateHome();
+    } else if (result.error !== 'user_cancel' && result.error !== 'system_cancel') {
+      Alert.alert('Authentication failed', 'Please use your password instead.');
     }
   };
 
@@ -157,6 +197,31 @@ export default function SignInScreen() {
         >
           <Text style={styles.primaryBtnLabel}>Sign In</Text>
         </Pressable>
+
+        {biometricAvailable && (
+          <>
+            <View style={styles.dividerRow}>
+              <View style={[styles.dividerLine, { backgroundColor: colors.border }]} />
+              <Text style={[styles.dividerText, { color: colors.mutedForeground }]}>or continue with</Text>
+              <View style={[styles.dividerLine, { backgroundColor: colors.border }]} />
+            </View>
+            <Pressable
+              onPress={loginWithBiometric}
+              accessibilityRole="button"
+              accessibilityLabel={biometricType === 'face' ? 'Sign in with Face ID' : 'Sign in with Fingerprint'}
+              style={({ pressed }) => [styles.biometricBtn, { borderColor: colors.border, opacity: pressed ? 0.7 : 1 }]}
+            >
+              <Ionicons
+                name={biometricType === 'face' ? 'scan-outline' : 'finger-print-outline'}
+                size={30}
+                color={colors.primary}
+              />
+            </Pressable>
+            <Text style={[styles.biometricHint, { color: colors.mutedForeground }]}>
+              {biometricType === 'face' ? 'Face ID' : 'Touch ID / Fingerprint'}
+            </Text>
+          </>
+        )}
       </View>
     </ImageBackground>
   );
@@ -193,4 +258,16 @@ const styles = StyleSheet.create({
   footer: { paddingHorizontal: 24, paddingTop: 12 },
   primaryBtn: { height: 54, borderRadius: 27, alignItems: 'center', justifyContent: 'center' },
   primaryBtnLabel: { color: '#fff', fontFamily: 'Inter_500Medium', fontSize: 17 },
+  dividerRow: { flexDirection: 'row', alignItems: 'center', gap: 10, marginTop: 18 },
+  dividerLine: { flex: 1, height: 1 },
+  dividerText: { fontFamily: 'Inter_400Regular', fontSize: 12 },
+  biometricBtn: {
+    alignSelf: 'center', marginTop: 14,
+    width: 58, height: 58, borderRadius: 29,
+    borderWidth: 1.5, backgroundColor: '#fff',
+    alignItems: 'center', justifyContent: 'center',
+    shadowColor: '#000', shadowOpacity: 0.08, shadowRadius: 8,
+    shadowOffset: { width: 0, height: 3 }, elevation: 3,
+  },
+  biometricHint: { fontFamily: 'Inter_400Regular', fontSize: 12, textAlign: 'center', marginTop: 8, marginBottom: 4 },
 });
