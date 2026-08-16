@@ -239,7 +239,7 @@ export default function SignInScreen() {
         <Pressable
           onPress={triggerBiometric}
           accessibilityRole="button"
-          accessibilityLabel={biometricType === 'face' ? 'Sign in with Face ID' : 'Sign in with Fingerprint'}
+          accessibilityLabel="Sign in with Fingerprint"
           style={({ pressed }) => [styles.biometricWrap, { opacity: pressed ? 0.8 : 1 }]}
         >
           {/* Outer pulse ring */}
@@ -248,16 +248,12 @@ export default function SignInScreen() {
           <View style={styles.biometricRingMid} />
           {/* Inner green circle */}
           <View style={styles.biometricInner}>
-            <Ionicons
-              name={biometricType === 'face' ? 'scan' : 'finger-print'}
-              size={36}
-              color="#fff"
-            />
+            <Ionicons name="finger-print" size={36} color="#fff" />
           </View>
         </Pressable>
 
         <Text style={[styles.biometricHint, { color: colors.mutedForeground }]}>
-          {biometricType === 'face' ? 'Face ID' : 'Touch ID · Fingerprint Login'}
+          Touch to login · Fingerprint
         </Text>
       </View>
     </ImageBackground>
