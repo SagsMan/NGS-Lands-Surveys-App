@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { RemitaPaymentModal } from '@/components/RemitaPaymentModal';
@@ -45,6 +46,11 @@ export default function CitizenServices() {
   const filteredOther = OTHER.filter((s) =>
     s.label.toLowerCase().includes(query.toLowerCase())
   );
+
+  const handleServicePress = (id: string) => {
+    if (id === '11') { setPaymentOpen(true); return; }
+    router.push({ pathname: '/citizen/service-detail', params: { serviceId: id } } as never);
+  };
 
   return (
     <View style={[styles.screen, { backgroundColor: BG }]}>
@@ -89,6 +95,7 @@ export default function CitizenServices() {
               {POPULAR.map((svc) => (
                 <Pressable
                   key={svc.id}
+                  onPress={() => handleServicePress(svc.id)}
                   style={({ pressed }) => [styles.popularCard, { opacity: pressed ? 0.85 : 1 }]}
                 >
                   <View style={styles.popularIcon}>
@@ -108,7 +115,7 @@ export default function CitizenServices() {
             {filteredOther.map((svc, i) => (
               <Pressable
                 key={svc.id}
-                onPress={() => svc.id === '11' ? setPaymentOpen(true) : undefined}
+                onPress={() => handleServicePress(svc.id)}
                 style={({ pressed }) => [
                   styles.listRow,
                   i < filteredOther.length - 1 && styles.listRowBorder,
