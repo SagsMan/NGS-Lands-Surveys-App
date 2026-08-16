@@ -3,6 +3,7 @@ import {
   Pressable, ScrollView, StyleSheet, Switch, Text, TextInput, View,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { AvatarPicker } from '@/components/AvatarPicker';
 import { StatusBar } from 'expo-status-bar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
@@ -430,10 +431,7 @@ export default function StaffProfile() {
         <ScrollView style={styles.scroll} contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
           {/* Avatar */}
           <View style={styles.avatarSection}>
-            {/* gender: 'male' → man icon; 'female' → woman icon */}
-            <View style={styles.avatarCircle}>
-              <Ionicons name="man" size={52} color="#fff" />
-            </View>
+            <AvatarPicker gender="male" size={100} />
             <Text style={styles.name}>Zaguru</Text>
             <Text style={styles.email}>zaguru@mls.gov.ng</Text>
             <View style={styles.staffBadge}>
@@ -487,14 +485,7 @@ const styles = StyleSheet.create({
   scroll:         { flex: 1 },
   content:        { paddingHorizontal: 20, paddingTop: 24 },
   sectionContent: { paddingHorizontal: 20, paddingTop: 20 },
-  avatarSection:  { alignItems: 'center', marginBottom: 28 },
-  avatarCircle: {
-    width: 96, height: 96, borderRadius: 48,
-    alignItems: 'center', justifyContent: 'center', marginBottom: 14,
-    backgroundColor: '#2563eb',
-    shadowColor: '#2563eb', shadowOpacity: 0.35, shadowRadius: 10,
-    shadowOffset: { width: 0, height: 4 }, elevation: 6,
-  },
+  avatarSection: { alignItems: 'center', marginBottom: 28, gap: 6 },
   name:           { fontFamily: 'Inter_600SemiBold', fontSize: 20, color: TEXT, marginBottom: 4 },
   email:          { fontFamily: 'Inter_400Regular', fontSize: 14, color: MUTED, marginBottom: 10 },
   staffBadge:     { backgroundColor: BLUE_BG, borderRadius: 20, paddingHorizontal: 14, paddingVertical: 5, marginBottom: 6 },
