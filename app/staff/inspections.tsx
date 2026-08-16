@@ -64,8 +64,12 @@ export default function StaffInspections() {
     <View style={[styles.screen, { backgroundColor: BG }]}>
       <StatusBar style="dark" />
       <View style={[styles.header, { paddingTop: insets.top + 8 }]}>
-        <Text style={styles.headerTitle}>Inspections</Text>
-        <Pressable style={styles.bellBtn}><Ionicons name="notifications-outline" size={24} color={TEXT} /></Pressable>
+        <View style={styles.homePill}>
+          <Text style={styles.headerTitle}>Inspections</Text>
+        </View>
+        <Pressable style={styles.bellBtn}>
+          <Ionicons name="notifications-outline" size={22} color="#fff" />
+        </Pressable>
       </View>
 
       <ScrollView style={styles.scroll} contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
@@ -154,8 +158,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20, paddingBottom: 10, backgroundColor: CARD,
     borderBottomWidth: 1, borderBottomColor: '#f0f0f0',
   },
-  headerTitle: { fontFamily: 'Inter_500Medium', fontSize: 20, color: TEXT },
-  bellBtn: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
+  homePill: { backgroundColor: PRIMARY, borderRadius: 22, paddingHorizontal: 18, paddingVertical: 7 },
+  headerTitle: { fontFamily: 'Inter_600SemiBold', fontSize: 16, color: '#fff' },
+  bellBtn: { width: 44, height: 44, borderRadius: 22, backgroundColor: PRIMARY, alignItems: 'center', justifyContent: 'center' },
   scroll: { flex: 1 },
   content: { paddingHorizontal: 16, paddingTop: 16 },
   ctaRow: { flexDirection: 'row', gap: 12, paddingVertical: 14 },

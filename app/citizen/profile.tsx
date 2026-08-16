@@ -391,7 +391,9 @@ export default function CitizenProfile() {
     <View style={[styles.screen, { backgroundColor: BG }]}>
       <StatusBar style="dark" />
       <View style={[styles.header, { paddingTop: insets.top + 8 }]}>
-        <Text style={styles.headerTitle}>Profile</Text>
+        <View style={styles.homePill}>
+          <Text style={styles.headerTitle}>Profile</Text>
+        </View>
       </View>
 
       {active ? (
@@ -454,7 +456,8 @@ export default function CitizenProfile() {
 const styles = StyleSheet.create({
   screen:       { flex: 1 },
   header:       { paddingHorizontal: 20, paddingBottom: 10, backgroundColor: CARD, borderBottomWidth: 1, borderBottomColor: '#f0f0f0' },
-  headerTitle:  { fontFamily: 'Inter_500Medium', fontSize: 20, color: TEXT },
+  homePill: { backgroundColor: PRIMARY, borderRadius: 22, paddingHorizontal: 18, paddingVertical: 7 },
+  headerTitle: { fontFamily: 'Inter_600SemiBold', fontSize: 16, color: '#fff' },
   scroll:       { flex: 1 },
   content:      { paddingHorizontal: 20, paddingTop: 24 },
   sectionContent: { paddingHorizontal: 20, paddingTop: 20 },

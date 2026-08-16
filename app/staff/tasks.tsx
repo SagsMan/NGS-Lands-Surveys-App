@@ -31,8 +31,12 @@ export default function StaffTasks() {
     <View style={[styles.screen, { backgroundColor: BG }]}>
       <StatusBar style="dark" />
       <View style={[styles.header, { paddingTop: insets.top + 8 }]}>
-        <Text style={styles.headerTitle}>Tasks</Text>
-        <Pressable style={styles.bellBtn}><Ionicons name="notifications-outline" size={24} color={TEXT} /></Pressable>
+        <View style={styles.homePill}>
+          <Text style={styles.headerTitle}>Tasks</Text>
+        </View>
+        <Pressable style={styles.bellBtn}>
+          <Ionicons name="notifications-outline" size={22} color="#fff" />
+        </Pressable>
       </View>
 
       <View style={styles.searchRow}>
@@ -93,8 +97,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20, paddingBottom: 10, backgroundColor: CARD,
     borderBottomWidth: 1, borderBottomColor: '#f0f0f0',
   },
-  headerTitle: { fontFamily: 'Inter_500Medium', fontSize: 20, color: TEXT },
-  bellBtn: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
+  homePill: { backgroundColor: PRIMARY, borderRadius: 22, paddingHorizontal: 18, paddingVertical: 7 },
+  headerTitle: { fontFamily: 'Inter_600SemiBold', fontSize: 16, color: '#fff' },
+  bellBtn: { width: 44, height: 44, borderRadius: 22, backgroundColor: PRIMARY, alignItems: 'center', justifyContent: 'center' },
   searchRow: { flexDirection: 'row', gap: 10, paddingHorizontal: 16, paddingVertical: 12, backgroundColor: CARD },
   searchBar: {
     flexDirection: 'row', alignItems: 'center', backgroundColor: '#f3f4f6',
