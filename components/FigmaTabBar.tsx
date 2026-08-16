@@ -19,6 +19,10 @@ export function FigmaTabBar({ state, descriptors, navigation }: {
         {state.routes.map((route, index) => {
           const focused = state.index === index;
           const { options } = descriptors[route.key];
+
+          // Hide any screen that has no tab icon (e.g. service-detail)
+          if (!options.tabBarIcon) return null;
+
           const label =
             typeof options.tabBarLabel === 'string'
               ? options.tabBarLabel
