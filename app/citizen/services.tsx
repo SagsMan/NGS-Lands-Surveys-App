@@ -82,6 +82,9 @@ export default function CitizenServices() {
             value={query}
             onChangeText={setQuery}
           />
+          <Pressable accessibilityLabel="Filter">
+            <Ionicons name="options-outline" size={20} color={MUTED} />
+          </Pressable>
         </View>
 
         {/* Popular Services */}
