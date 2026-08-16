@@ -6,6 +6,19 @@ Built with Expo (React Native), Expo Router, and TypeScript.
 
 ---
 
+## Presentation Slides
+
+| | | |
+|:---:|:---:|:---:|
+| ![Slide 1 — Cover](assets/screenshots/slides/slide1-cover.jpg) | ![Slide 2 — What Is the NGS App?](assets/screenshots/slides/slide2-intro.jpg) | ![Slide 3 — Citizen Experience](assets/screenshots/slides/slide3-citizen.jpg) |
+| Slide 1 — Cover | Slide 2 — What Is the NGS App? | Slide 3 — Citizen Experience |
+| ![Slide 4 — Smart Government Features](assets/screenshots/slides/slide4-features.jpg) | ![Slide 5 — Citizen App Screens](assets/screenshots/slides/slide5-citizen-screens.jpg) | ![Slide 6 — Staff App Screens](assets/screenshots/slides/slide6-staff-screens.jpg) |
+| Slide 4 — Smart Government Features | Slide 5 — Citizen App Screens | Slide 6 — Staff App Screens |
+| ![Slide 7 — Closing](assets/screenshots/slides/slide7-closing.jpg) | | |
+| Slide 7 — Closing | | |
+
+---
+
 ## Screenshots
 
 ### Onboarding
@@ -19,6 +32,24 @@ Built with Expo (React Native), Expo Router, and TypeScript.
 | Create Account | Verify OTP | Sign In (Citizen) | Sign In (Staff) |
 |:---:|:---:|:---:|:---:|
 | ![Create Account](assets/screenshots/06-create-account.jpg) | ![Verify OTP](assets/screenshots/07-verify-otp.jpg) | ![Citizen Sign In](assets/screenshots/04-sign-in.jpg) | ![Staff Sign In](assets/screenshots/05-sign-in-staff.jpg) |
+
+### Citizen Portal
+
+| Home | Services | Applications | Inbox | Profile |
+|:---:|:---:|:---:|:---:|:---:|
+| ![Home](assets/screenshots/08-citizen-home.jpg) | ![Services](assets/screenshots/09-citizen-services.jpg) | ![Applications](assets/screenshots/10-citizen-applications.jpg) | ![Inbox](assets/screenshots/16-citizen-inbox.jpg) | ![Profile](assets/screenshots/11-citizen-profile.jpg) |
+
+### Staff Portal
+
+| Home | Tasks | Inspections | Applications | Profile |
+|:---:|:---:|:---:|:---:|:---:|
+| ![Home](assets/screenshots/12-staff-home.jpg) | ![Tasks](assets/screenshots/13-staff-tasks.jpg) | ![Inspections](assets/screenshots/17-staff-inspections.jpg) | ![Applications](assets/screenshots/14-staff-applications.jpg) | ![Profile](assets/screenshots/15-staff-profile.jpg) |
+
+### Map & Payment
+
+| Satellite Map Inspection | Remita Payment |
+|:---:|:---:|
+| ![Map Inspection](assets/screenshots/19-map-inspection.jpg) | ![Remita Payment](assets/screenshots/18-remita-payment.jpg) |
 
 ---
 
